@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naina Dubey | Digital Marketing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#faf7f2; --ink:#1f1d1a; --muted:#6b655c; --accent:#c4552d; --card:#ffffff; --line:#e8e1d6; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; }
+  .wrap { max-width:1000px; margin:0 auto; padding:0 20px; }
+  nav { display:flex; justify-content:space-between; align-items:center; padding:22px 0; }
+  nav .logo { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; }
+  nav a { color:var(--ink); text-decoration:none; margin-left:22px; font-size:15px; }
+  nav a:hover { color:var(--accent); }
+  .hero { padding:70px 0 60px; }
+  .hero p.tag { color:var(--accent); font-weight:600; letter-spacing:1px; text-transform:uppercase; font-size:13px; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(36px,6vw,58px); line-height:1.15; margin:14px 0 20px; }
+  .hero p.intro { font-size:18px; color:var(--muted); max-width:640px; }
+  .btn { display:inline-block; margin-top:28px; margin-right:10px; padding:12px 24px; border-radius:30px; text-decoration:none; font-weight:600; font-size:15px; }
+  .btn.main { background:var(--accent); color:#fff; }
+  .btn.alt { border:1.5px solid var(--ink); color:var(--ink); }
+  section { padding:60px 0; border-top:1px solid var(--line); }
+  h2 { font-family:'Playfair Display',serif; font-size:32px; margin-bottom:28px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px; }
+  .card img { width:100%; border-radius:10px; margin-bottom:16px; }
+  .card h3 { font-size:19px; margin-bottom:8px; }
+  .card .label { color:var(--accent); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+  .card p { color:var(--muted); font-size:15px; margin-top:8px; }
+  .card .result { margin-top:14px; font-weight:600; color:var(--ink); font-size:15px; }
+  .card a { color:var(--accent); font-weight:600; text-decoration:none; display:inline-block; margin-top:12px; }
+  .job { margin-bottom:26px; }
+  .job h3 { font-size:19px; }
+  .job span { color:var(--muted); font-size:14px; }
+  .job ul { margin:10px 0 0 20px; color:var(--muted); }
+  .skills { display:flex; flex-wrap:wrap; gap:10px; }
+  .skills span { background:var(--card); border:1px solid var(--line); padding:8px 16px; border-radius:20px; font-size:14px; }
+  .contact a { color:var(--accent); font-weight:600; text-decoration:none; }
+  footer { text-align:center; padding:30px 0; color:var(--muted); font-size:13px; border-top:1px solid var(--line); }
+  @media (max-width:600px) { nav a { margin-left:12px; font-size:14px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <div class="logo">Naina Dubey</div>
+    <div><a href="#work">Work</a><a href="#experience">Experience</a><a href="#contact">Contact</a></div>
+  </nav>
+
+  <div class="hero">
+    <p class="tag">Digital Marketing | Content | AI Workflows</p>
+    <h1>I build brands that people remember and campaigns that bring leads.</h1>
+    <p class="intro">I'm a digital marketer from Mumbai with experience in social media management, content creation, campaigns, lead generation, website projects and brand communication. I also use AI to make marketing faster and smarter.</p>
+    <a class="btn main" href="#work">See my work</a>
+    <a class="btn alt" href="resume.pdf" target="_blank">Download resume</a>
+  </div>
+
+  <section id="work">
+    <h2>Selected Work</h2>
+    <div class="grid">
+
+      <div class="card">
+        <p class="label">Website</p>
+        <h3>PROJECT 1 TITLE</h3>
+        <p>What was the goal, and what did you do? Write 2 to 3 lines here.</p>
+        <p class="result">Result: ADD A NUMBER OR OUTCOME</p>
+        <a href="LINK" target="_blank">View project →</a>
+      </div>
+
+      <div class="card">
+        <p class="label">Content</p>
+        <h3>PROJECT 2 TITLE</h3>
+        <p>What was the goal, and what did you do? Write 2 to 3 lines here.</p>
+        <p class="result">Result: ADD A NUMBER OR OUTCOME</p>
+        <a href="LINK" target="_blank">View project →</a>
+      </div>
+
+      <div class="card">
+        <p class="label">Social Media</p>
+        <h3>PROJECT 3 TITLE</h3>
+        <p>What was the goal, and what did you do? Write 2 to 3 lines here.</p>
+        <p class="result">Result: ADD A NUMBER OR OUTCOME</p>
+        <a href="LINK" target="_blank">View project →</a>
+      </div>
+
+      <div class="card">
+        <p class="label">AI in Marketing</p>
+        <h3>AI Voice Calling Agent</h3>
+        <p>Built an AI voice agent to call and qualify outbound leads, saving the sales team hours of manual calling.</p>
+        <p class="result">Result: ADD A NUMBER OR OUTCOME</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="job">
+      <h3>Senior Executive, Digital Marketing | TransGanization</h3>
+      <span>Jul 2025 – Present | Navi Mumbai</span>
+      <ul>
+        <li>WRITE WHAT YOU DO HERE</li>
+        <li>WRITE WHAT YOU DO HERE</li>
+        <li>WRITE WHAT YOU DO HERE</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Management Trainee, Digital Marketing | BJW Health</h3>
+      <span>START – END DATES</span>
+      <ul>
+        <li>WRITE WHAT YOU DID HERE</li>
+        <li>WRITE WHAT YOU DID HERE</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>PGDM, Marketing | ITM Business School</h3>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">
+      <span>Social Media Management</span><span>Content Creation</span><span>Campaign Planning</span>
+      <span>Lead Generation</span><span>Website Projects</span><span>Brand Communication</span>
+      <span>LinkedIn Marketing</span><span>AI Workflows</span><span>Copywriting</span>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Let's work together</h2>
+    <p>Email: <a href="mailto:YOUR EMAIL">YOUR EMAIL</a></p>
+    <p>LinkedIn: <a href="YOUR LINKEDIN URL" target="_blank">linkedin.com/in/YOUR-PROFILE</a></p>
+    <p>Location: Mumbai, India</p>
+  </section>
+
+</div>
+<footer>© 2026 Naina Dubey</footer>
+</body>
+</html>
