@@ -244,6 +244,15 @@
   .case-body dt { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1.4px; color:var(--ink); margin-bottom:4px; }
   .case-body dd { font-size:15px; color:var(--muted); }
 
+  .case-split { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:30px; padding-top:22px; align-items:start; }
+  .case-body.one { grid-template-columns:1fr; padding-top:0; gap:16px; }
+  .case-img { display:block; border-radius:14px; overflow:hidden; box-shadow:0 12px 30px rgba(60,70,95,.14); cursor:zoom-in; }
+  .case-img img { display:block; width:100%; height:auto; transition:transform .6s cubic-bezier(.16,.84,.3,1); }
+  .case-img:hover img { transform:scale(1.03); }
+  .case-cap { display:block; padding:10px 14px; font-size:12.5px; color:var(--muted); background:rgba(255,255,255,.8); }
+  .case-body .lesson { border-left:2px solid; border-image:var(--grad) 1; padding-left:14px; }
+  .case-body .lesson dd { font-family:'Playfair Display',serif; font-style:italic; font-size:17px; color:var(--ink); }
+  @media (max-width:860px) { .case-split { grid-template-columns:1fr; gap:20px; } }
   @media (max-width:860px) {
     .impact { grid-template-columns:repeat(2,1fr); margin-top:-36px; }
     .stat + .stat { border-left:0; }
@@ -400,6 +409,27 @@
           <div><dt>Tools</dt><dd>Retell AI, Claude, Zoho Bigin CRM</dd></div>
           <div><dt>Result</dt><dd>Discovery calls booked automatically and fed straight into the sales pipeline, freeing the team to focus on prospects who were ready to talk.</dd></div>
         </dl>
+      </article>
+
+      <article class="case has-media">
+        <div class="case-head">
+          <span class="case-no">04</span>
+          <div><p class="label">Website &amp; Project Ownership</p><h3>Taking the company website live, end to end</h3></div>
+          <div class="case-result"><b>Award</b><span>Certificate of Recognition</span></div>
+        </div>
+        <div class="case-split">
+          <button class="ws-item case-img" type="button" data-type="image" data-src="award-website-launch.jpg" aria-label="View the Certificate of Recognition">
+            <img src="award-website-launch.jpg" alt="Naina Dubey receiving the TransGanization Certificate of Recognition, April 2026" loading="lazy">
+            <span class="case-cap">Certificate of Recognition, TransGanization · April 2026</span>
+          </button>
+          <dl class="case-body one">
+            <div><dt>Challenge</dt><dd>Joining as a fresher, I was given one of the biggest responsibilities in the team: taking the company website live. Tight deadlines, incomplete designs, agency delays and last-minute changes tested me every day, right up to launch day.</dd></div>
+            <div><dt>What I did</dt><dd>With no coding background, I learned, researched, troubleshot and coordinated in real time: working with the external agency, handling server, Node.js and DNS setup for go-live, and building three production pages myself.</dd></div>
+            <div><dt>Tools</dt><dd>Figma, Node.js, VPS hosting, DNS setup</dd></div>
+            <div><dt>Result</dt><dd>The website went live, and the founders presented me with a Certificate of Recognition for outstanding work, dedication and a proactive approach.</dd></div>
+            <div class="lesson"><dt>What I learned</dt><dd>You don't need to know everything to start, just the will to figure it out.</dd></div>
+          </dl>
+        </div>
       </article>
 
     </div>
