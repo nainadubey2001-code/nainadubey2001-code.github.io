@@ -1240,6 +1240,16 @@ One process this week. That&#x27;s all it takes to begin.
   function tile(w) { return '<div class="tl ' + w[2] + '">' + media(w) + '</div>'; }
   var hasGsap = !!(window.gsap && window.ScrollTrigger), root = document.documentElement, mobile = matchMedia("(max-width:960px)").matches;
 
+  // If any tile or thumbnail image fails to load, hide it instead of showing an empty box
+  document.addEventListener("error", function (e) {
+    var el = e.target; if (!el || el.tagName !== "IMG") return;
+    var tl = el.closest(".tl, .splash .it"); if (tl) { tl.style.display = "none"; return; }
+    var item = el.closest(".ws-item"); if (item) item.style.display = "none";
+  }, true);
+  addEventListener("load", function () { [].forEach.call(document.images, function (im) {
+    if (im.complete && im.naturalWidth === 0 && im.getAttribute("src")) im.dispatchEvent(new Event("error"));
+  }); });
+
   // Build the wall: 6 columns, each list doubled so columns never run out while moving
   (function () {
     var plane = document.getElementById("wallPlane"); if (!plane) return;
