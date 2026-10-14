@@ -142,6 +142,18 @@
   .wave { display:flex; align-items:center; justify-content:center; gap:6px; height:130px; }
   .wave i { width:6px; height:14px; border-radius:6px; background:#fff; animation:wv 1.2s ease-in-out infinite; }
   @keyframes wv { 0%,100% { height:14px; opacity:.45; } 50% { height:120px; opacity:1; } }
+  .cs-car { position:relative; height:100%; max-width:100%; aspect-ratio:1; border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.6); touch-action:pan-y; }
+  .cs-track { display:flex; height:100%; transition:transform .9s var(--ease); }
+  .case-media .screen .cs-track img { flex:none; width:100%; height:100%; max-height:none; object-fit:cover; border-radius:0; box-shadow:none; transform:none; }
+  .cs-nav { position:absolute; top:50%; width:38px; height:38px; margin-top:-19px; border-radius:50%; border:0; cursor:pointer; font:300 22px/1 var(--sans); color:#111;
+    background:rgba(255,255,255,.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow:0 6px 18px rgba(0,0,0,.25); opacity:0; transition:opacity .35s, transform .35s var(--ease); }
+  .cs-nav.prev { left:12px; } .cs-nav.next { right:12px; }
+  .cs-car:hover .cs-nav { opacity:1; } .cs-nav:hover { transform:scale(1.08); }
+  .cs-dots { position:absolute; left:0; right:0; bottom:12px; display:flex; justify-content:center; gap:6px; }
+  .cs-dots b { width:7px; height:7px; border-radius:99px; background:rgba(0,0,0,.25); cursor:pointer; transition:width .4s var(--ease), background .4s; }
+  .cs-dots b.on { width:22px; background:#111; }
+  .cs-tag { position:absolute; left:12px; top:12px; font-size:11.5px; padding:6px 10px; border-radius:999px; color:#111; background:rgba(255,255,255,.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  @media (hover:none) { .cs-nav { opacity:1; } }
   .ai-card { text-align:center; } .ai-card p { margin-top:26px; color:rgba(255,255,255,.66); font-size:13px; max-width:30ch; margin-inline:auto; }
 
   /* ---------- SAMPLES ---------- */
@@ -320,7 +332,8 @@
   .hero-photo.handoff img { transform:none; transition:none; }
 
   /* ---------- WORK WALL: tilted 3D grid that moves as you scroll ---------- */
-  .splash-wall { position:absolute; inset:0; overflow:hidden; }
+  .wall { position:relative; height:240vh; }
+  .wall-pin { position:sticky; top:0; height:100vh; overflow:hidden; }
   .wall-plane { position:absolute; left:50%; top:50%; width:max(1500px,135vw); display:grid; grid-template-columns:repeat(6,1fr); gap:18px;
     transform:translate(-50%,-50%) perspective(2000px) rotateX(26deg) rotateZ(-11deg) scale(1.1); transform-origin:50% 50%; }
   .wall-stage { position:absolute; inset:0; will-change:transform; }
@@ -335,8 +348,7 @@
   .wall-copy h2 { font-size:clamp(40px,6.4vw,104px); line-height:.98; letter-spacing:-.055em; font-weight:400; max-width:12ch; }
   .wall-copy h2 .ww { display:inline-block; }
   .wall-copy p { margin-top:22px; max-width:44ch; color:var(--muted); font-size:16px; }
-  .wall-copy .label { color:var(--muted); }
-  .splash .ip { z-index:5; }
+  .wall-copy .pill { margin-top:26px; }
 
   /* ---------- STRIPS: two rows of work that glide with the scroll ---------- */
   .strip { padding-block:clamp(60px,8vw,110px) 0; overflow:hidden; }
@@ -380,6 +392,7 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:960px) {
+    .wall { height:200vh; }
     .wall-plane { width:max(900px,190vw); grid-template-columns:repeat(4,1fr); gap:12px; transform:translate(-50%,-50%) perspective(1400px) rotateX(24deg) rotateZ(-11deg) scale(1.05); }
     .wall-col { gap:12px; } .wall-col:nth-child(n+5) { display:none; }
     .wall-veil { background:radial-gradient(ellipse 100% 36% at 50% 50%, rgba(239,239,239,.97) 0%, rgba(239,239,239,.9) 55%, rgba(239,239,239,0) 100%), linear-gradient(180deg, var(--bg) 0%, rgba(239,239,239,0) 18%, rgba(239,239,239,0) 82%, var(--bg) 100%); }
@@ -424,17 +437,7 @@
 </head>
 <body>
 
-<div class="splash" id="intro" aria-hidden="true"><div class="intro-bg" id="introBg"></div>
-  <div class="splash-wall" id="introWall">
-    <div class="wall-stage" id="wallStage"><div class="wall-plane" id="wallPlane"></div></div>
-    <div class="wall-veil"></div>
-    <div class="wall-copy" id="wallCopy">
-      <span class="label">Naina Dubey · Selected work 2023–2026</span>
-      <h2 id="wallTitle">Two years of work, in motion.</h2>
-      <p>Webinars, websites, magazines, reels, launches and campaigns. Every piece made, planned or managed by me.</p>
-    </div>
-  </div>
-  <div id="introTiles"></div><span class="intro-count" id="introCount">0</span><span class="intro-meta" id="introMeta"><b>Naina Dubey</b>Marketing portfolio ©2026</span></div>
+<div class="splash" id="intro" aria-hidden="true"><div class="intro-bg" id="introBg"></div><div id="introTiles"></div><span class="intro-count" id="introCount">0</span><span class="intro-meta" id="introMeta"><b>Naina Dubey</b>Marketing portfolio ©2026</span></div>
 
 <header class="nav">
   <div class="wrap">
@@ -473,6 +476,20 @@
   </div>
 </section>
 
+
+<!-- WORK WALL -->
+<section class="wall" id="wall" aria-label="Selected work">
+  <div class="wall-pin">
+    <div class="wall-stage" id="wallStage"><div class="wall-plane" id="wallPlane" aria-hidden="true"></div></div>
+    <div class="wall-veil"></div>
+    <div class="wall-copy">
+      <span class="label">Selected work · 2023–2026</span>
+      <h2 id="wallTitle">Two years of work, in motion.</h2>
+      <p>Webinars, websites, magazines, reels, launches and campaigns. Every piece made, planned or managed by me.</p>
+      <a class="pill dark" href="#samples">Browse the work</a>
+    </div>
+  </div>
+</section>
 
 <!-- REEL -->
 <section class="reel" aria-label="Showreel">
@@ -836,7 +853,7 @@
     } catch (err) { lenis = null; }
   }
 
-  // ---------- Intro: the wall of work plays first, then the portrait lands in the home page ----------
+  // ---------- Intro ----------
   (function () {
     var intro = document.getElementById("intro"), photo = document.getElementById("heroPhoto");
     function go() { root.classList.add("ready"); photo.classList.add("in"); }
@@ -846,56 +863,84 @@
     window.scrollTo(0, 0);
     if (lenis) lenis.stop(); else document.body.style.overflow = "hidden";
 
-    var vw = innerWidth, vh = innerHeight, holder = document.getElementById("introTiles");
-    var cols = document.querySelectorAll("#wallPlane .wall-col"), title = document.getElementById("wallTitle");
-    title.innerHTML = title.textContent.split(" ").map(function (w) { return '<span class="ww">' + w + '</span>'; }).join(" ");
-    var words = title.querySelectorAll(".ww"), copyRest = document.querySelectorAll("#wallCopy .label, #wallCopy p");
-
-    // portrait card: starts as a tile in the middle of the wall
-    var port = document.createElement("div");
+    // positions: [left %, top %, width vw desktop, width vw mobile, work index]
+    var spots = [[5,9,13,30,0],[23,3,11,0,3],[41,7,12,26,5],[60,4,10,0,9],[77,10,15,34,1],[3,45,12,0,15],[19,37,10,30,6],[44,38,11,0,13],
+                 [70,42,12,30,12],[86,50,10,0,8],[12,70,13,34,18],[36,66,11,0,21],[57,70,13,32,7],[80,74,11,0,24]];
+    var holder = document.getElementById("introTiles"), vw = innerWidth, vh = innerHeight, tiles = [];
+    var ratio = { p: 1.25, s: 1, l: .75, w: .625 };
+    spots.forEach(function (s, k) {
+      var wv = mobile ? s[3] : s[2]; if (!wv) return;
+      var w = WORK[s[4]], el = document.createElement("div"), W = vw * wv / 100, H = W * ratio[w[2]];
+      var L = mobile ? [4, 54, 8, 60, 30, 2, 64, 34][tiles.length] : s[0], T = mobile ? [8, 6, 30, 34, 52, 62, 72, 80][tiles.length] : s[1];
+      el.className = "it"; el.innerHTML = media(w, true);
+      el.style.cssText = "left:" + L + "%;top:" + T + "%;width:" + W + "px;height:" + H + "px";
+      holder.appendChild(el); tiles.push(el);
+    });
+    // portrait card sits exactly where the hero photo is; it grows out of the pile
+    var r = photo.getBoundingClientRect(), port = document.createElement("div");
     port.className = "ip"; port.innerHTML = '<img src="naina-portrait.jpg" alt="">';
-    var pw = mobile ? vw * .52 : Math.min(vw * .2, 300), ph = pw * 1.15;
-    port.style.cssText = "left:" + (vw - pw) / 2 + "px;top:" + (vh - ph) / 2 + "px;width:" + pw + "px;height:" + ph + "px";
+    port.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px";
     holder.appendChild(port);
 
     var count = document.getElementById("introCount"), meta = document.getElementById("introMeta"), n = { v: 0 };
-    var tl = gsap.timeline({ defaults: { ease: "expo.out" } }), end = 3.3;
-    // the wall drifts on its own
-    gsap.fromTo("#wallStage", { scale: 1.18 }, { scale: .96, duration: 5.4, ease: "power1.out" });
-    cols.forEach(function (c, k) {
-      gsap.fromTo(c, { yPercent: k % 2 ? -34 : -6 }, { yPercent: k % 2 ? -14 : -26, duration: 6, ease: "power1.out" });
+    var tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    tl.to(n, { v: 100, duration: 2.1, ease: "power2.inOut", onUpdate: function () { count.textContent = Math.round(n.v); } }, 0)
+      .fromTo(meta, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .8 }, .1);
+    tiles.forEach(function (el, k) {
+      var rot = (k % 2 ? 1 : -1) * (2 + (k * 7 % 5));
+      tl.fromTo(el, { opacity: 0, scale: .55, y: 70, rotation: rot * 2, filter: "blur(14px)" },
+        { opacity: 1, scale: 1, y: 0, rotation: rot * .5, filter: "blur(0px)", duration: 1.15 }, .12 + k * .09);
+      tl.to(el, { y: "-=" + (14 + k % 4 * 8), duration: 2.4, ease: "sine.inOut" }, .12 + k * .09 + .9);
     });
-    tl.fromTo("#introWall", { opacity: 0 }, { opacity: 1, duration: .9, ease: "power2.out" }, 0)
-      .to(n, { v: 100, duration: end, ease: "power2.inOut", onUpdate: function () { count.textContent = Math.round(n.v); } }, 0)
-      .fromTo(meta, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .8 }, .2)
-      .fromTo(words, { opacity: 0, y: 46, filter: "blur(14px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.3, stagger: .09 }, .35)
-      .fromTo(copyRest, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1, stagger: .12 }, 1.1)
-      // hand over: words lift away, the wall recedes, the portrait rises out of it
-      .to("#wallCopy", { opacity: 0, y: -40, filter: "blur(10px)", duration: .7, ease: "power2.in" }, end)
-      .to([count, meta], { opacity: 0, y: 16, duration: .5, ease: "power2.in" }, end)
-      .fromTo(port, { opacity: 0, scale: .6, rotation: -6 }, { opacity: 1, scale: 1, rotation: 0, duration: 1, ease: "expo.out" }, end + .25)
-      .to("#introWall", { opacity: 0, scale: .9, filter: "blur(6px)", duration: 1.1, ease: "power2.inOut" }, end + .5)
-      .to(port, { left: function () { return photo.getBoundingClientRect().left; }, top: function () { return photo.getBoundingClientRect().top; },
-        width: function () { return photo.getBoundingClientRect().width; }, height: function () { return photo.getBoundingClientRect().height; },
-        duration: 1.15, ease: "expo.inOut" }, end + .9)
-      .to("#introBg", { opacity: 0, duration: .8, ease: "power2.out" }, end + 1.75)
-      .add(function () { photo.classList.add("handoff"); go(); }, end + 1.8)
+    // gather: every piece flies into the portrait's spot
+    var cx = r.left + r.width / 2, cy = r.top + r.height / 2, at = 2.15;
+    tl.add(function () {
+      r = photo.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2;
+      port.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px";
+    }, at - .02);
+    tiles.forEach(function (el, k) {
+      function dx() { var b = el.getBoundingClientRect(); return cx - (b.left + b.width / 2) + gsap.getProperty(el, "x"); }
+      function dy() { var b = el.getBoundingClientRect(); return cy - (b.top + b.height / 2) + gsap.getProperty(el, "y"); }
+      tl.to(el, { x: dx, y: dy, scale: function () { return (r.width * .62) / el.offsetWidth; },
+        rotation: (k % 2 ? 1 : -1) * (3 + k % 4 * 2), duration: 1, ease: "power4.inOut", overwrite: "auto" }, at + (k % 5) * .035);
+    });
+    tl.to(count, { opacity: 0, y: 20, duration: .5, ease: "power2.in" }, at)
+      .to(meta, { opacity: 0, duration: .4 }, at)
+      .fromTo(port, { opacity: 0, scale: .5, rotation: -4 }, { opacity: 1, scale: 1, rotation: 0, duration: 1.1, ease: "expo.out" }, at + .85)
+      .to(tiles, { opacity: 0, duration: .35, ease: "none" }, at + 1.3)
+      .to("#introBg", { opacity: 0, duration: .8, ease: "power2.out" }, at + 1.15)
+      .add(function () { photo.classList.add("handoff"); go(); }, at + 1.2)
       .add(function () {
         intro.remove();
         if (lenis) lenis.start(); else document.body.style.overflow = "";
         ScrollTrigger.refresh();
-      }, end + 2.6);
-    // any scroll, tap or key press speeds the intro up
-    function hurry() { tl.timeScale(3); }
-    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) { addEventListener(ev, hurry, { once: true, passive: true }); });
-    setTimeout(function () { if (document.body.contains(intro)) tl.progress(1); }, 9000);
+      }, at + 2.05);
+    setTimeout(function () { if (document.body.contains(intro)) { tl.progress(1); } }, 7000);
   })();
-
 
   // ---------- Scroll scenes ----------
   (function () {
     if (!hasGsap || reduce) return;
     gsap.registerPlugin(ScrollTrigger);
+
+    // Wall: plane settles and columns travel in opposite directions
+    var wall = document.getElementById("wall");
+    if (wall) {
+      var cols = wall.querySelectorAll(".wall-col");
+      var st = { trigger: wall, start: "top bottom", end: "bottom top", scrub: 1 };
+      cols.forEach(function (c, k) {
+        gsap.fromTo(c, { yPercent: k % 2 ? -32 : -8 }, { yPercent: k % 2 ? -8 : -32, ease: "none", scrollTrigger: st });
+      });
+      gsap.fromTo("#wallStage", { scale: mobile ? .95 : 1.02 }, { scale: mobile ? .74 : .8, ease: "none", scrollTrigger: st });
+      // headline words come out of blur as the wall pins
+      var h = document.getElementById("wallTitle");
+      h.innerHTML = h.textContent.split(" ").map(function (w) { return '<span class="ww">' + w + '</span>'; }).join(" ");
+      gsap.fromTo(h.querySelectorAll(".ww"), { opacity: 0, y: 40, filter: "blur(12px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", stagger: .08, ease: "power2.out",
+          scrollTrigger: { trigger: wall, start: "top 70%", end: "top top", scrub: 1 } });
+      gsap.fromTo(".wall-copy .label, .wall-copy p, .wall-copy .pill", { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, stagger: .1, ease: "power2.out", scrollTrigger: { trigger: wall, start: "top 40%", end: "top -10%", scrub: 1 } });
+    }
 
     // Footer wordmark: letters rise in one by one
     var wm = document.querySelector(".wordmark");
@@ -989,7 +1034,12 @@
   // Case studies switcher
   (function () {
     var cases = [
-      { big: "80–90", bigL: "Attendees per session", media: '<img src="webinar-series.jpg" alt="Webinar series campaign creative" data-zoom="webinar-series.jpg">',
+      { big: "80–90", bigL: "Attendees per session", media: '<div class="cs-car" data-car>' +
+          '<div class="cs-track"><img src="webinar-carousel-1.jpg" alt="Webinar carousel, slide 1: the series is now live" data-zoom="webinar-carousel-1.jpg">' +
+          '<img src="webinar-carousel-2.jpg" alt="Webinar carousel, slide 2: Episode 2 topic" data-zoom="webinar-carousel-2.jpg">' +
+          '<img src="webinar-carousel-3.jpg" alt="Webinar carousel, slide 3: Episode 3 coming soon" data-zoom="webinar-carousel-3.jpg"></div>' +
+          '<button class="cs-nav prev" type="button" aria-label="Previous slide">‹</button><button class="cs-nav next" type="button" aria-label="Next slide">›</button>' +
+          '<div class="cs-dots"><b></b><b></b><b></b></div><span class="cs-tag">Carousel · 3 slides</span></div>',
         rows: [["Challenge", "Get busy founders and senior leaders to sign up for, and actually attend, a monthly executive webinar and LinkedIn Live series."],
                ["What I did", "Owned the marketing end to end: pre-event promotion across WhatsApp and social media, live session support on the day, and publishing each recording to YouTube so every session kept working after it ended."],
                ["Tools", "WhatsApp campaigns, LinkedIn, YouTube, Canva"],
@@ -1013,12 +1063,31 @@
     ];
     var tabs = document.querySelectorAll(".case-list button"), rows = document.getElementById("caseRows"),
         screen = document.getElementById("caseScreen"), big = document.getElementById("caseBig"), bigL = document.getElementById("caseBigL"), first = true;
+    var carTimer;
+    function initCar(car) {
+      var track = car.querySelector(".cs-track"), slides = track.children, dots = car.querySelectorAll(".cs-dots b"), i = 0, x0 = null;
+      function go(n) { i = (n + slides.length) % slides.length; track.style.transform = "translateX(" + (-100 * i) + "%)";
+        dots.forEach(function (d, k) { d.className = k === i ? "on" : ""; }); }
+      function auto() { clearInterval(carTimer); if (!reduce) carTimer = setInterval(function () { go(i + 1); }, 3800); }
+      car.querySelector(".prev").onclick = function () { go(i - 1); auto(); };
+      car.querySelector(".next").onclick = function () { go(i + 1); auto(); };
+      dots.forEach(function (d, k) { d.onclick = function () { go(k); auto(); }; });
+      car.addEventListener("mouseenter", function () { clearInterval(carTimer); });
+      car.addEventListener("mouseleave", auto);
+      car.addEventListener("pointerdown", function (e) { x0 = e.clientX; });
+      var swiped = false;
+      car.addEventListener("pointerup", function (e) { if (x0 === null) return; var dx = e.clientX - x0; x0 = null; swiped = Math.abs(dx) > 40; if (swiped) { go(i + (dx < 0 ? 1 : -1)); auto(); } });
+      car.addEventListener("click", function (e) { if (swiped) { e.stopPropagation(); swiped = false; } }, true);
+      go(0); auto();
+    }
     function render(n) {
+      clearInterval(carTimer);
       var c = cases[n], els = [rows, screen, big, bigL];
       if (!first) els.forEach(function (el) { el.classList.add("out"); });
       setTimeout(function () {
         rows.innerHTML = c.rows.map(function (r) { return '<div class="case-row' + (r[2] ? " " + r[2] : "") + '"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join("");
         screen.innerHTML = c.media; big.textContent = c.big; bigL.textContent = c.bigL;
+        var car = screen.querySelector("[data-car]"); if (car) initCar(car);
         els.forEach(function (el) { el.classList.remove("out"); });
       }, first || reduce ? 0 : 260);
       first = false;
