@@ -112,9 +112,14 @@
   .arrows { display:flex; gap:8px; margin-top:14px; }
   .arrows button { width:38px; height:38px; border-radius:50%; border:0; cursor:pointer; font-size:15px; color:#111; background:linear-gradient(180deg,#fdfdfd,#e6e6e6); box-shadow:0 0 0 1px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.06); transition:transform .3s var(--ease); }
   .arrows button:hover { transform:translateY(-2px); }
-  .stat-num { font-size:clamp(96px,14vw,196px); font-weight:400; letter-spacing:-.07em; line-height:.82; font-variant-numeric:tabular-nums; }
-  .stat-txt { font-size:15px; max-width:34ch; }
-  .dots { display:flex; gap:6px; margin-top:18px; } .dots b { width:22px; height:2px; border-radius:2px; background:rgba(0,0,0,.12); transition:background .4s; } .dots b.on { background:#000; }
+  .stats { --accent:#042db4; }
+  .stat-num { white-space:nowrap; font-size:clamp(84px,12.5vw,184px); font-weight:400; letter-spacing:-.07em; line-height:.82; font-variant-numeric:tabular-nums; color:var(--accent); transition:color .7s var(--ease); }
+  .stat-side { max-width:30ch; }
+  .stat-tag { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--accent); padding:7px 13px; border-radius:999px;
+    background:color-mix(in srgb, var(--accent) 9%, #fff); box-shadow:0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent); margin-bottom:16px; transition:color .7s var(--ease), background .7s var(--ease), box-shadow .7s var(--ease); }
+  .stat-tag i { width:7px; height:7px; border-radius:50%; background:var(--accent); transition:background .7s var(--ease); }
+  .stat-txt { font-size:clamp(19px,1.6vw,23px); line-height:1.38; letter-spacing:-.018em; font-weight:400; color:var(--ink); text-wrap:pretty; }
+  .dots { display:flex; gap:6px; margin-top:18px; } .dots b { width:22px; height:3px; border-radius:3px; background:rgba(0,0,0,.12); transition:background .5s, width .5s var(--ease); } .dots b.on { width:38px; background:var(--accent); }
   .swap { transition:opacity .45s var(--ease), transform .55s var(--ease), filter .45s; }
   .swap.out { opacity:0; transform:translateY(12px); filter:blur(6px); }
 
@@ -517,7 +522,7 @@
     <div class="stats">
       <div><span class="label">Results</span><div class="arrows"><button type="button" id="statPrev" aria-label="Previous result">←</button><button type="button" id="statNext" aria-label="Next result">→</button></div></div>
       <div><div class="stat-num swap" id="statNum" aria-live="polite">+57%</div><div class="dots" id="statDots"></div></div>
-      <p class="stat-txt swap" id="statTxt">Growth in the company LinkedIn page.</p>
+      <div class="stat-side swap" id="statSide"><span class="stat-tag" id="statTag"><i></i><span id="statTagT">Company LinkedIn</span></span><p class="stat-txt" id="statTxt">Growth in the company LinkedIn page.</p></div>
     </div>
   </div>
 </section>
@@ -1028,6 +1033,8 @@
       ["+", 50, "%", "Growth in the founder's LinkedIn page through coordinated thought-leadership content."],
       ["+", 20, "%", "Increase in app registrations at BJW Health, after research with 50+ doctors and therapy centres."]
     ];
+    var look = [["#042db4", "Company LinkedIn"], ["#0f8a5f", "Executive webinars"], ["#d9480f", "Monthly magazine"], ["#6b3fd4", "Founder's LinkedIn"], ["#c2255c", "BJW Health app"]];
+    var stats = document.querySelector(".stats"), side = document.getElementById("statSide"), tagT = document.getElementById("statTagT");
     var i = 0, num = document.getElementById("statNum"), txt = document.getElementById("statTxt"), dots = document.getElementById("statDots"), timer, started = false;
     data.forEach(function () { dots.appendChild(document.createElement("b")); });
     function count(d) {
@@ -1038,8 +1045,9 @@
     }
     function show(n) {
       i = (n + data.length) % data.length;
-      num.classList.add("out"); txt.classList.add("out");
-      setTimeout(function () { txt.textContent = data[i][3]; num.classList.remove("out"); txt.classList.remove("out"); count(data[i]); }, reduce ? 0 : 280);
+      num.classList.add("out"); side.classList.add("out");
+      setTimeout(function () { txt.textContent = data[i][3]; tagT.textContent = look[i][1]; stats.style.setProperty("--accent", look[i][0]);
+        num.classList.remove("out"); side.classList.remove("out"); count(data[i]); }, reduce ? 0 : 280);
       [].forEach.call(dots.children, function (d, k) { d.className = k === i ? "on" : ""; });
     }
     function auto() { clearInterval(timer); if (!reduce) timer = setInterval(function () { show(i + 1); }, 5200); }
