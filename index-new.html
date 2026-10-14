@@ -126,8 +126,10 @@
   /* ---------- CASES ---------- */
   .cases-grid { display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(24px,4vw,64px); align-items:start; margin-top:36px; }
   .case-list { list-style:none; border-top:1px solid var(--line); }
-  .case-list button { all:unset; box-sizing:border-box; width:100%; cursor:pointer; display:grid; grid-template-columns:38px 1fr auto; gap:12px; align-items:baseline; padding:17px 0; border-bottom:1px solid var(--line); color:var(--soft); transition:color .3s; }
+  .case-list button { position:relative; all:unset; box-sizing:border-box; width:100%; cursor:pointer; display:grid; grid-template-columns:38px 1fr auto; gap:12px; align-items:baseline; padding:17px 0; border-bottom:1px solid var(--line); color:var(--soft); transition:color .3s; }
   .case-list button:hover, .case-list button[aria-selected="true"] { color:var(--ink); }
+  .case-list button { position:relative; }
+  .case-list .prog { position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--ink); border-radius:2px; pointer-events:none; }
   .case-list .n { font-size:13px; }
   .case-list .t { font-size:clamp(19px,1.7vw,24px); letter-spacing:-.025em; font-weight:400; }
   .case-list .arrow { opacity:0; transform:translateX(-8px); transition:.4s var(--ease); }
@@ -148,7 +150,7 @@
   .wave i { width:6px; height:14px; border-radius:6px; background:#fff; animation:wv 1.2s ease-in-out infinite; }
   @keyframes wv { 0%,100% { height:14px; opacity:.45; } 50% { height:120px; opacity:1; } }
   .cs-car { position:relative; height:100%; max-width:100%; aspect-ratio:1; border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.6); touch-action:pan-y; }
-  .cs-track { display:flex; height:100%; transition:transform .9s var(--ease); }
+  .cs-track { display:flex; width:100%; height:100%; transition:transform .9s var(--ease); }
   .case-media .screen .cs-track img { flex:none; width:100%; height:100%; max-height:none; object-fit:cover; border-radius:0; box-shadow:none; transform:none; }
   .cs-nav { position:absolute; top:50%; width:38px; height:38px; margin-top:-19px; border-radius:50%; border:0; cursor:pointer; font:300 22px/1 var(--sans); color:#111;
     background:rgba(255,255,255,.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow:0 6px 18px rgba(0,0,0,.25); opacity:0; transition:opacity .35s, transform .35s var(--ease); }
@@ -1096,7 +1098,7 @@
       var track = car.querySelector(".cs-track"), slides = track.children, dots = car.querySelectorAll(".cs-dots b"), i = 0, x0 = null;
       function go(n) { i = (n + slides.length) % slides.length; track.style.transform = "translateX(" + (-100 * i) + "%)";
         dots.forEach(function (d, k) { d.className = k === i ? "on" : ""; }); }
-      function auto() { clearInterval(carTimer); if (!reduce) carTimer = setInterval(function () { go(i + 1); }, 3800); }
+      function auto() { clearInterval(carTimer); if (!reduce) carTimer = setInterval(function () { if (visible) go(i + 1); }, 3800); }
       car.querySelector(".prev").onclick = function () { go(i - 1); auto(); };
       car.querySelector(".next").onclick = function () { go(i + 1); auto(); };
       dots.forEach(function (d, k) { d.onclick = function () { go(k); auto(); }; });
@@ -1121,7 +1123,24 @@
       first = false;
       tabs.forEach(function (t, k) { t.setAttribute("aria-selected", k === n); });
     }
-    tabs.forEach(function (t, k) { t.addEventListener("click", function () { render(k); }); });
+    // Auto-advance through the four cases; a click on any case stops it so the visitor can read
+    var progs = [], cur = 0, elapsed = 0, autoOn = !reduce, visible = false, last = 0, durs = [11.4, 7, 7, 8];
+    tabs.forEach(function (t) { var p = document.createElement("span"); p.className = "prog"; p.setAttribute("aria-hidden", "true"); t.appendChild(p); progs.push(p); });
+    function show(n) { cur = n; elapsed = 0; progs.forEach(function (p) { p.style.width = "0"; }); render(n); }
+    tabs.forEach(function (t, k) { t.addEventListener("click", function () {
+      autoOn = false; progs.forEach(function (p) { p.style.width = "0"; }); if (k !== cur) { cur = k; render(k); }
+    }); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: .35 }).observe(document.getElementById("cases"));
+    else visible = true;
+    (function tick(now) {
+      var dt = last ? Math.min(.1, (now - last) / 1000) : 0; last = now;
+      if (autoOn && visible && !document.hidden) {
+        elapsed += dt;
+        progs[cur].style.width = Math.min(100, elapsed / durs[cur] * 100) + "%";
+        if (elapsed >= durs[cur]) show((cur + 1) % cases.length);
+      }
+      if (autoOn) requestAnimationFrame(tick);
+    })(0);
     render(0);
   })();
 
