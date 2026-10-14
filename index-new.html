@@ -814,8 +814,10 @@
   (function () {
     var plane = document.getElementById("wallPlane"); if (!plane) return;
     var html = "";
+    var V = WORK.filter(function (w) { return w[1] === "v"; }), I = WORK.filter(function (w) { return w[1] === "i"; }), vi = 0, ii = 0;
     for (var c = 0; c < 6; c++) {
-      var col = WORK.filter(function (_, k) { return k % 6 === c; }).concat(WORK.filter(function (_, k) { return (k + 3) % 6 === c; }));
+      var col = [];
+      for (var r = 0; r < 10; r++) col.push((r + c) % 3 === 1 ? V[vi++ % V.length] : I[(ii++ * 7) % I.length]);
       html += '<div class="wall-col">' + col.concat(col).map(tile).join("") + '</div>';
     }
     plane.innerHTML = html;
@@ -827,13 +829,30 @@
     if (t1) t1.innerHTML = a.concat(a).map(tile).join("");
     if (t2) t2.innerHTML = b.concat(b).map(tile).join("");
   })();
-  // Tile videos only play while on screen
+  // Tile clips: measure what is really on screen (works inside the tilted 3D wall in every browser),
+  // play up to 10 visible clips, pause everything else
   (function () {
-    if (!("IntersectionObserver" in window)) return;
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) {
-      var v = e.target; if (e.isIntersecting && !reduce) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
-    }); }, { rootMargin: "120px" });
-    document.querySelectorAll(".tl video").forEach(function (v) { io.observe(v); });
+    if (reduce) return;
+    var vids = [].slice.call(document.querySelectorAll(".tl video"));
+    vids.forEach(function (v) { v.muted = true; v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.preload = "metadata"; });
+    function check() {
+      if (document.hidden) return;
+      var vh = innerHeight, vw = innerWidth, cx = vw / 2, cy = vh / 2, on = [];
+      vids.forEach(function (v) {
+        if (!v.isConnected) return;
+        var r = v.getBoundingClientRect();
+        if (r.width && r.bottom > 0 && r.top < vh && r.right > 0 && r.left < vw) on.push([Math.hypot(r.left + r.width / 2 - cx, r.top + r.height / 2 - cy), v]);
+        else if (!v.paused) v.pause();
+      });
+      on.sort(function (a, b) { return a[0] - b[0]; });
+      on.forEach(function (o, k) {
+        var v = o[1];
+        if (k < 10) { if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+        else if (!v.paused) v.pause();
+      });
+    }
+    setInterval(check, 450); addEventListener("scroll", function () { clearTimeout(check.t); check.t = setTimeout(check, 80); }, { passive: true });
+    check();
   })();
 
   // ---------- Smooth scroll ----------
