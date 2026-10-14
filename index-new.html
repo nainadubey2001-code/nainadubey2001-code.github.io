@@ -379,6 +379,38 @@
   .lenis.lenis-stopped { overflow:hidden; }
   .sw { transition:none; }
 
+
+  /* grouped panels: full-width group headings */
+  .ws-group { grid-column:1/-1; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin:22px 2px 2px; padding-top:18px; border-top:1px solid var(--line); }
+  .ws-group:first-child { margin-top:0; padding-top:0; border-top:0; }
+  .ws-group b { font-weight:400; font-size:19px; letter-spacing:-.02em; } .ws-group span { font-size:13.5px; color:var(--muted); }
+  .ws-thumb.full.sq img { object-position:50% 20%; }
+  #tab-linkedin .ws-thumb.full:not(.wide) { aspect-ratio:4/5; }
+  #tab-insta .ws-thumb { aspect-ratio:1/1; }
+  @media (max-width:640px) { .eb-ttl { font-size:14px; } .eb-top, .eb-sub { font-size:7px; } .eb-book { padding:10px; width:60%; } }
+  .ws-thumb.full.wide { aspect-ratio:16/9 !important; }
+  .ws-thumb.full.wide + .ws-meta { }
+  .ws-thumb.sheet { background:radial-gradient(120% 90% at 0% 0%, #dff3e6 0%, rgba(223,243,230,0) 60%), radial-gradient(110% 90% at 100% 100%, #e3e9fb 0%, rgba(227,233,251,0) 60%), #eef1f0; }
+  .ws-thumb.sheet .bar { background:#1f6f43; } .ws-thumb.sheet .bar i { background:rgba(255,255,255,.55) !important; }
+  /* ebook covers */
+  .ws-thumb.ebook { display:flex; align-items:center; justify-content:center; background:radial-gradient(90% 80% at 50% 0%, #f8efe2 0%, rgba(248,239,226,0) 70%), #efe6da; }
+  .eb-book { position:relative; width:52%; aspect-ratio:3/4; border-radius:4px 10px 10px 4px; padding:14px 13px; display:flex; flex-direction:column; color:#fff;
+    background:linear-gradient(160deg,#2a1a10 0%,#7a3b12 55%,#d07a2a 100%); box-shadow:inset 6px 0 0 rgba(0,0,0,.18), 0 22px 40px -18px rgba(60,30,10,.55); transform:rotate(-3deg); transition:transform .8s var(--ease); }
+  .ws-thumb.ebook.e2 .eb-book { background:linear-gradient(160deg,#0f1b2d 0%,#1d3d6b 55%,#3f7fc4 100%); }
+  .ws-thumb.ebook.e3 .eb-book { background:linear-gradient(160deg,#13241b 0%,#1f5a3b 55%,#4fae7a 100%); }
+  .ws-thumb.ebook.e4 .eb-book { background:linear-gradient(160deg,#2a1029 0%,#6b1f5c 55%,#c2489a 100%); }
+  .eb-top { font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; opacity:.8; }
+  .eb-ttl { margin-top:auto; font-size:19px; line-height:1.02; letter-spacing:-.03em; font-weight:500; }
+  .eb-sub { margin-top:8px; font-size:7.5px; letter-spacing:.06em; text-transform:uppercase; opacity:.75; }
+  .ws-item:hover .eb-book { transform:rotate(0) translateY(-6px) scale(1.04); }
+  /* post viewer: creative + caption side by side */
+  .post-view { display:grid; grid-template-columns:minmax(0,auto) minmax(300px,420px); gap:18px; align-items:stretch; max-width:min(1150px,100%); max-height:calc(100vh - 120px); }
+  .post-view img { max-height:calc(100vh - 120px); max-width:100%; width:auto; border-radius:16px; display:block; box-shadow:0 40px 80px -30px rgba(0,0,0,.4); }
+  .post-cap { background:#fff; border-radius:16px; padding:22px 24px; overflow-y:auto; max-height:calc(100vh - 120px); box-shadow:0 0 0 1px rgba(0,0,0,.05), 0 30px 60px -30px rgba(0,0,0,.3); }
+  .post-cap .pc-meta { font-size:12.5px; color:var(--muted); padding-bottom:12px; margin-bottom:14px; border-bottom:1px solid var(--line); }
+  .post-cap .pc-text { white-space:pre-line; font-size:15px; line-height:1.6; color:var(--ink-2); }
+  @media (max-width:860px) { .post-view { grid-template-columns:1fr; overflow-y:auto; } .post-view img { max-height:55vh; margin:0 auto; } .post-cap { max-height:none; } }
+
   /* ---------- MOTION ---------- */
   @keyframes fadeUp { from { opacity:0; transform:translateY(18px); filter:blur(6px); } to { opacity:1; transform:none; filter:none; } }
   @keyframes wordIn { from { opacity:0; transform:translateY(.35em); filter:blur(10px); } to { opacity:1; transform:none; filter:none; } }
@@ -569,6 +601,8 @@
         <button class="ws-tab" role="tab" id="t-mag" aria-controls="tab-mag" aria-selected="false">Magazine &amp; Writing</button>
         <button class="ws-tab" role="tab" id="t-videos" aria-controls="tab-videos" aria-selected="false">Videos</button>
         <button class="ws-tab" role="tab" id="t-social" aria-controls="tab-social" aria-selected="false">Social Creatives</button>
+        <button class="ws-tab" role="tab" id="t-linkedin" aria-controls="tab-linkedin" aria-selected="false">LinkedIn &amp; Strategy</button>
+        <button class="ws-tab" role="tab" id="t-insta" aria-controls="tab-insta" aria-selected="false">Instagram</button>
       </div>
     </div>
     <div class="ws-panel" id="tab-web" role="tabpanel" aria-labelledby="t-web">
@@ -589,7 +623,7 @@
         <button class="ws-item" type="button" data-type="gallery" data-pages="bombay-fries-menu-1.jpg,bombay-fries-menu-2.jpg">
           <span class="ws-cover"><span class="ws-thumb stack fan"><img class="pg p1" src="th-menu2.jpg" alt="" loading="lazy" decoding="async"><img class="pg p2" src="th-menu.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">2 pages</span><span class="ws-ttl">Food menu</span><span class="ws-sub">The Bombay Fries | Menu design</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
     </div>
-    <div class="ws-panel" id="tab-mag" role="tabpanel" aria-labelledby="t-mag" hidden>
+    <div class="ws-panel grouped" id="tab-mag" role="tabpanel" aria-labelledby="t-mag" hidden>
         <a class="ws-item" href="https://online.pubhtml5.com/yqxew/xcrg/" target="_blank" rel="noopener">
           <span class="ws-cover"><span class="ws-thumb stack fan"><img class="pg p1" src="th-three.jpg" alt="" loading="lazy" decoding="async"><img class="pg p2" src="th-blue.jpg" alt="" loading="lazy" decoding="async"><img class="pg p3" src="th-sys.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Live link</span><span class="ws-ttl">Business Yoga, August 2026</span><span class="ws-sub">Monthly magazine | Read the full edition</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span></a>
         <button class="ws-item" type="button" data-type="gallery" data-pages="article-systematic-management-1.jpg,article-systematic-management-2.jpg,article-systematic-management-3.jpg,article-systematic-management-4.jpg,article-systematic-management-5.jpg,article-systematic-management-6.jpg,article-systematic-management-7.jpg">
@@ -600,6 +634,19 @@
           <span class="ws-cover"><span class="ws-thumb stack"><span class="sheet s3"></span><span class="sheet s2"></span><img class="pg p1" src="th-three.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">3 pages</span><span class="ws-ttl">A Three-Dimensional Approach</span><span class="ws-sub">Feature article on business resilience</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
         <button class="ws-item" type="button" data-type="gallery" data-pages="article-financial-visibility-1.jpg,article-financial-visibility-2.jpg">
           <span class="ws-cover"><span class="ws-thumb stack"><span class="sheet s3"></span><span class="sheet s2"></span><img class="pg p1" src="th-fin.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">2 pages</span><span class="ws-ttl">Financial Visibility as Discipline</span><span class="ws-sub">Feature article layout</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <p class="ws-group"><b>Webinar ebooks</b><span>Each Darpan session turned into a flipbook for attendees</span></p>
+        <a class="ws-item" href="https://pubhtml5.com/yqxew/ayap/" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb ebook e1"><span class="eb-book"><span class="eb-top">TransGanization · Darpan</span><span class="eb-ttl">Darpan session ebook</span><span class="eb-sub">Pause · Perceive · Purify · Proceed</span></span></span><span class="ws-meta"><span class="ws-kind">Flipbook · 20 pages</span><span class="ws-ttl">Darpan session ebook</span><span class="ws-sub">Webinar takeaways, designed as a flipbook</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://online.pubhtml5.com/yqxew/mjqw/" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb ebook e2"><span class="eb-book"><span class="eb-top">TransGanization · Darpan</span><span class="eb-ttl">Disruption</span><span class="eb-sub">Pause · Perceive · Purify · Proceed</span></span></span><span class="ws-meta"><span class="ws-kind">Flipbook · Darpan ebook</span><span class="ws-ttl">Disruption</span><span class="ws-sub">Webinar takeaways, designed as a flipbook</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://online.pubhtml5.com/yqxew/uzbx/" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb ebook e3"><span class="eb-book"><span class="eb-top">TransGanization · Darpan</span><span class="eb-ttl">The Execution Model</span><span class="eb-sub">Pause · Perceive · Purify · Proceed</span></span></span><span class="ws-meta"><span class="ws-kind">Flipbook · Darpan ebook</span><span class="ws-ttl">The Execution Model</span><span class="ws-sub">Webinar takeaways, designed as a flipbook</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://online.pubhtml5.com/yqxew/jpxt/" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb ebook e4"><span class="eb-book"><span class="eb-top">TransGanization · Darpan</span><span class="eb-ttl">Levers of Execution</span><span class="eb-sub">Pause · Perceive · Purify · Proceed</span></span></span><span class="ws-meta"><span class="ws-kind">Flipbook · Darpan ebook</span><span class="ws-ttl">Levers of Execution</span><span class="ws-sub">Webinar takeaways, designed as a flipbook</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
     </div>
     <div class="ws-panel" id="tab-videos" role="tabpanel" aria-labelledby="t-videos" hidden>
         <button class="ws-item" type="button" data-type="video" data-src="atb-product-video.mp4" data-poster="atb-product-video.jpg">
@@ -642,6 +689,387 @@
           <span class="ws-cover"><span class="ws-thumb full"><img src="t-atb-12hr-post.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Creative</span><span class="ws-ttl">ATB 12-hour protection post</span><span class="ws-sub">Humankind (now BJW Health) | Social media post</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
         <button class="ws-item" type="button" data-type="image" data-src="humankind-atb-poster.jpg">
           <span class="ws-cover"><span class="ws-thumb full"><img src="t-humankind-atb-poster.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Creative</span><span class="ws-ttl">ATB product poster</span><span class="ws-sub">Humankind (now BJW Health) | Print ad</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+    </div>
+    <div class="ws-panel grouped" id="tab-linkedin" role="tabpanel" aria-labelledby="t-linkedin" hidden>
+        <p class="ws-group"><b>Strategy and planning</b><span>How the content is planned, measured and tied to the funnel</span></p>
+        <button class="ws-item" type="button" data-type="gallery" data-pages="st-calendar-1.jpg,st-calendar-2.jpg">
+          <span class="ws-cover"><span class="ws-thumb browser sheet"><span class="win"><span class="bar"><i></i><i></i><i></i></span><img src="th-st-calendar.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="ws-meta"><span class="ws-kind">Content calendar · 2 sheets</span><span class="ws-ttl">July content calendar</span><span class="ws-sub">Date, channel, pillar and full post copy for every post</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <button class="ws-item" type="button" data-type="gallery" data-pages="st-channels.jpg">
+          <span class="ws-cover"><span class="ws-thumb browser sheet"><span class="win"><span class="bar"><i></i><i></i><i></i></span><img src="th-st-channels.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="ws-meta"><span class="ws-kind">Strategy sheet</span><span class="ws-ttl">Channel roles in the funnel</span><span class="ws-sub">What LinkedIn, Instagram, YouTube, email, SEO and webinars each do</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <button class="ws-item" type="button" data-type="gallery" data-pages="st-funnel.jpg">
+          <span class="ws-cover"><span class="ws-thumb browser sheet"><span class="win"><span class="bar"><i></i><i></i><i></i></span><img src="th-st-funnel.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="ws-meta"><span class="ws-kind">Marketing workbook</span><span class="ws-ttl">Funnel definition and SLA</span><span class="ws-sub">Visitor to customer, with entry and exit criteria per stage</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <button class="ws-item" type="button" data-type="gallery" data-pages="st-tracker-rohit.jpg">
+          <span class="ws-cover"><span class="ws-thumb browser sheet"><span class="win"><span class="bar"><i></i><i></i><i></i></span><img src="th-st-tracker-rohit.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="ws-meta"><span class="ws-kind">Campaign tracker · 17 posts</span><span class="ws-ttl">Founder LinkedIn campaign</span><span class="ws-sub">Rohit Arora · likes, shares, views and comments tracked per post</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <button class="ws-item" type="button" data-type="gallery" data-pages="st-tracker-kundan.jpg">
+          <span class="ws-cover"><span class="ws-thumb browser sheet"><span class="win"><span class="bar"><i></i><i></i><i></i></span><img src="th-st-tracker-kundan.jpg" alt="" loading="lazy" decoding="async"></span></span><span class="ws-meta"><span class="ws-kind">Campaign tracker · 11 posts</span><span class="ws-ttl">Co-founder LinkedIn campaign</span><span class="ws-sub">Kundan Gurav · weekly plan, pillars and performance</span></span><span class="ws-ic go" aria-hidden="true">View <b>→</b></span></span></button>
+        <p class="ws-group"><b>Posts I wrote</b><span>Copy written by me, creative designed by the in-house designer</span></p>
+        <button class="ws-item" type="button" data-type="post" data-src="li-post-1.jpg" data-meta="LinkedIn · TransGanization company page · Copy and content calendar by me, design by the in-house designer">
+          <span class="ws-cover"><span class="ws-thumb full"><img src="t-li-post-1.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn post</span><span class="ws-ttl">Your children don't need your money</span><span class="ws-sub">Wealth vs documented wisdom</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Most wealthy parents focus on the wrong inheritance:
+→ ₹50 Crore in fixed assets (property, gold, investments) 
+→ ₹20 Crore business valuation 
+→ ₹10 Crore liquid cash
+
+Total inheritance: ₹80 Crore
+Sounds generous. Feels secure.
+
+Here&#x27;s what happens next:
+Generation 2 inherits ₹80 Crore. But zero wisdom on how to preserve it, grow it, or make decisions with it.
+
+10 years later: ₹80 Crore becomes ₹20 Crore through bad decisions, lifestyle inflation, and poor investments.
+
+Why? Because you gave them fish. You never taught them how to fish.
+
+Now contrast this:
+→ ₹30 Crore in assets 
+→ Plus: Documented decision frameworks 
+→ Plus: Relationship management playbooks 
+→ Plus: Financial discipline principles 
+→ Plus: Business judgment development 
+→ Plus: Crisis management wisdom
+
+10 years later: ₹30 Crore becomes ₹150 Crore because they knew HOW TO BUILD, not just HOW TO SPEND.
+
+The truth most parents don&#x27;t realize:
+&quot;Your greatest inheritance isn&#x27;t your wealth. It&#x27;s your documented wisdom on how to create wealth.&quot;
+
+Money is a snapshot. Wisdom is a movie that keeps playing.
+Money can be lost in one bad decision. Wisdom prevents bad decisions.
+
+What are you actually leaving behind?
+
+The pattern across hundreds of families: Wealth without wisdom evaporates within 2 generations. Wisdom without wealth creates wealth across generations.
+
+Document your genius. That&#x27;s the real inheritance.
+Parents in business - what wisdom documentation have you started for your children?</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="li-post-2.jpg" data-meta="LinkedIn · TransGanization company page · Copy and content calendar by me, design by the in-house designer">
+          <span class="ws-cover"><span class="ws-thumb full"><img src="t-li-post-2.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn post</span><span class="ws-ttl">Systems and people, out of sync</span><span class="ws-sub">The leaking-bucket post</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Growth without alignment is like pouring water into a leaking bucket 💧🪣
+
+When strategy, systems, and people aren&#x27;t in sync, you lose value every single day 📉
+
+Where do you feel the biggest “leak” is in your business right now — Systems or People ?</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="li-post-3.jpg" data-meta="LinkedIn · TransGanization company page · Copy and content calendar by me, design by the in-house designer">
+          <span class="ws-cover"><span class="ws-thumb full"><img src="t-li-post-3.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn post</span><span class="ws-ttl">Smart founder. Still exhausted.</span><span class="ws-sub">₹5 Cr hustle vs ₹50 Cr capability</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>You can&#x27;t hustle your way past the need for structure. ⚙️
+₹5 Cr needs hustle. 💪
+
+₹15 Cr needs systems. 📊
+
+₹50 Cr needs organizational capabilities. 🏗️
+
+Most founders are stuck because they&#x27;re using ₹5 Cr methods at ₹15 Cr scale. 📈
+
+The tools that got you here won’t get you there. 🚀
+
+#BusinessStrategy #Entrepreneurship #LeadershipDevelopment</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="li-post-4.jpg" data-meta="LinkedIn · TransGanization company page · Copy and content calendar by me, design by the in-house designer">
+          <span class="ws-cover"><span class="ws-thumb full"><img src="t-li-post-4.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn post</span><span class="ws-ttl">Legacy isn't an 80-hour week</span><span class="ws-sub">Building a business that runs without you</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>You arrive at 7 AM. Leave at 10 PM. Work weekends. Skip family dinners.
+
+You tell yourself: &quot;I&#x27;m building something for my children.&quot;
+
+Are you though?
+
+Because here&#x27;s what your children will inherit: 
+• A business that collapses without you.
+• An organization where nobody knows how decisions are actually made. 
+• A set of customer relationships that are personal, not institutional.
+
+That&#x27;s not a legacy. That&#x27;s a ticking time bomb.
+
+Legacy isn&#x27;t measured in hours worked. It&#x27;s measured in: 
+• Can the business thrive without you? • Does it have systems that outlive you? • Is the wisdom transferable?
+
+Many promoters work 80-hour weeks and are proud of their sacrifice.
+
+The question to ask: &quot;If you took 30 days off with zero contact, what happens?&quot;
+
+90% answer: &quot;Business would suffer significantly.&quot;
+
+That&#x27;s the problem.
+
+Real legacy is building something that works BETTER without you micromanaging every decision.
+
+The shift:
+• From: Working IN the business 80 hours/week To: Working ON the business 20 hours/week
+• From: Being indispensable To: Being optional
+• From: Personal heroics To: Systematic excellence</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="li-post-5.jpg" data-meta="LinkedIn · TransGanization company page · Copy and content calendar by me, design by the in-house designer">
+          <span class="ws-cover"><span class="ws-thumb full"><img src="t-li-post-5.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn post</span><span class="ws-ttl">The asset that outlives you</span><span class="ws-sub">Tangible vs intangible assets</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Take inventory of your business assets: 
+→ That fancy office in a premium location? Lease expires. 
+→ Those machines and equipment? Depreciated every year. 
+→ That brand reputation? Fades without consistent delivery. 
+→ Your personal customer relationships? Die when you die.
+
+Now the hard question: What outlives you?
+
+Most promoters spend decades accumulating assets that look impressive but have zero succession value.
+
+The only assets that truly matter: 
+→ Documented systems (how we actually operate) 
+→ Transferable knowledge (how we make decisions) 
+→ Institutional relationships (customers who trust the BUSINESS, not you personally) 
+→ Cultural principles (values that guide behavior when you&#x27;re not watching)
+
+These are invisible. Intangible. Can&#x27;t be photographed for social media.
+
+But they&#x27;re the ONLY things that make your business valuable after you&#x27;re gone.
+
+The shift needed: 
+From: Building impressive tangible assets To: Building enduring intangible systems
+
+The pattern across hundreds of businesses: 
+Businesses with impressive offices and zero systems? Sold at distress prices during succession.
+
+Businesses with modest facilities and strong systems? Commanded premium valuations.
+
+The question: Are you building to impress today? Or to endure tomorrow?
+
+Your tombstone won&#x27;t list your office square footage. It&#x27;ll show whether what you built outlived you.
+
+Choose wisely.
+
+What intangible assets are you building in your business?</span></span></button>
+        <p class="ws-group"><b>Darpan LinkedIn Live</b><span>Weekly Saturday session by the founder, promoted on LinkedIn</span></p>
+        <a class="ws-item" href="https://www.linkedin.com/events/7483381984803778560" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb full wide"><img src="darpan-live-1.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn Live · 4 Jul 2026</span><span class="ws-ttl">Customer Mirror</span><span class="ws-sub">Darpan event page and creative</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://www.linkedin.com/events/7463460953276366848" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb full wide"><img src="darpan-live-2.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn Live · 23 May 2026</span><span class="ws-ttl">The Alignment Mirage</span><span class="ws-sub">Darpan event page and creative</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://www.linkedin.com/events/7459914300271489024" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb full wide"><img src="darpan-live-3.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn Live · 16 May 2026</span><span class="ws-ttl">AI as an Execution Lever</span><span class="ws-sub">Darpan event page and creative</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+        <a class="ws-item" href="https://www.linkedin.com/events/7468226824159027200" target="_blank" rel="noopener">
+          <span class="ws-cover"><span class="ws-thumb full wide"><img src="darpan-live-4.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">LinkedIn Live · 13 Jun 2026</span><span class="ws-ttl">Transformation's Mirror (Part II)</span><span class="ws-sub">Darpan event page and creative</span></span><span class="ws-ic go" aria-hidden="true">Visit <b>↗</b></span></span>
+        </a>
+    </div>
+    <div class="ws-panel grouped" id="tab-insta" role="tabpanel" aria-labelledby="t-insta" hidden>
+        <p class="ws-group"><b>Company page</b><span>@transganization on Instagram</span></p>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-1.jpg" data-meta="Instagram · TransGanization company page · 29 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-1.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 29 Mar 2026</span><span class="ws-ttl">Darpan is back</span><span class="ws-sub">Session launch announcement</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Over time, Darpan became a space where entrepreneurs came together to think clearly during uncertain phases of business.
+
+It was never about advice —
+it was about clarity, discipline, and staying in control when things were not.
+
+Today, we are entering another phase of global and economic uncertainty.
+
+And in such times, clarity becomes critical.
+We are restarting Darpan.
+
+Starting this Saturday.
+Date: 4th April 2026
+Time: 07:30AM - 09:00AM</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-2.jpg" data-meta="Instagram · TransGanization company page · 11 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-2.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 11 Mar 2026</span><span class="ws-ttl">Focus on action, not results</span><span class="ws-sub">Bhagavad Gita meets business systems</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Ancient wisdom isn&#x27;t outdated.
+
+It&#x27;s just misunderstood in a business context.
+
+When you have strong systems:
+
+- You can focus on doing the right things (action)
+
+- Without obsessing over outcomes (results)
+
+- Because systems deliver consistent results
+
+The anxiety comes from weak systems.
+
+Strong systems give you peace to work.
+
+This is where Indian philosophy meets modern execution.
+
+#system #execution #peace #workhard</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-3.jpg" data-meta="Instagram · TransGanization company page · 7 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-3.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 7 Mar 2026</span><span class="ws-ttl">That seat is lonely</span><span class="ws-sub">The founder's seat</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>No one tells you how lonely the founder&#x27;s seat is.
+
+Your team looks to you for answers.
+
+Your family needs you to be confident.
+
+Your investors want results.
+
+But who do YOU turn to when you&#x27;re uncertain?
+
+This is why peer groups, mentors, and strategic partners matter.
+
+Not for advice. For perspective.
+
+Who&#x27;s in your corner?
+
+#founder #growthmindset #confidence #trending</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-4.jpg" data-meta="Instagram · TransGanization company page · 18 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-4.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 18 Mar 2026</span><span class="ws-ttl">Documentation = Liberation</span><span class="ws-sub">Write down how you do this task</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Every task you document is one less thing only YOU can do.
+
+Process writing isn&#x27;t about creating manuals. It&#x27;s about creating freedom.
+
+When processes exist:
+- Anyone can execute
+
+- Quality stays consistent
+
+- You can actually take vacation
+
+- Business value increases
+
+The business that runs without you is worth 3x more than one that needs you.
+
+Documentation = Liberation.
+
+What&#x27;s one process you could document this week?
+
+#document #businessplan #liberation #freedomfinance #trendings</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-5.jpg" data-meta="Instagram · TransGanization company page · 28 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-5.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 28 Mar 2026</span><span class="ws-ttl">Home by 6 PM</span><span class="ws-sub">What good structure looks like</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Transformation isn&#x27;t always dramatic.
+
+Sometimes it&#x27;s just:
+- Leaving on time
+- Not checking email at night
+- Trusting your team
+- Sleeping better
+
+When you build the right structure, life changes.
+
+Not just business metrics.
+
+What would your life look like if your business didn&#x27;t need you every minute?</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="igc-6.jpg" data-meta="Instagram · TransGanization company page · 31 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-igc-6.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 31 Mar 2026</span><span class="ws-ttl">A tree doesn't eat its own fruit</span><span class="ws-sub">Reel · leadership as seva</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>A tree doesn&#x27;t eat its own fruit.
+A river doesn&#x27;t drink its own water.
+The sun doesn&#x27;t keep its light.
+Nature gives.
+Leaders forget this.
+We start with &quot;Who am I serving?&quot;
+And slowly shift to &quot;What am I getting?&quot;
+That&#x27;s where things get heavy.
+👉 Every result feels personal
+👉 Every setback hits your identity
+👉 Work starts draining instead of energizing
+Because now it&#x27;s about proving, not serving.
+But when you shift back:
+You still build. Still push. Still grow.
+Just without the emotional weight.
+The work becomes lighter. Clearer. More powerful.
+People can feel it. Even if they can&#x27;t explain it.
+So create. Build. Scale.
+Just don&#x27;t forget
+your work was never meant only for you.
+When it starts nourishing others,
+it becomes bigger than success.
+It becomes seva.
+PS: Is your work coming from consumption or contribution? 🤔</span></span></button>
+        <p class="ws-group"><b>@transganizer profile</b><span>Posts on the second TransGanization Instagram profile</span></p>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-1.jpg" data-meta="Instagram · @transganizer · 5 Oct 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-1.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 5 Oct 2026</span><span class="ws-ttl">Bigger than its founder</span><span class="ws-sub">Reel · expertise into capability</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Your expertise built the business. Whether it becomes an organisation depends on your ability to build that expertise into other people.
+For years, your expertise was the product.
+
+Clients came for your judgement, your eye, and the way you solved what others couldn&#x27;t. That personal excellence is what got the business off the ground.
+
+But personal excellence has a ceiling, and that ceiling is you.
+
+No matter how good you are, the business can only handle as much as you can handle.
+
+That is why expertise can build a reputation and a healthy practice. But on its own, it cannot build something that runs on more than one person&#x27;s ability.
+
+Turning that expertise into something the whole organisation carries comes down to a few deliberate choices:
+
+Teach people how you think, not just what to do. When they understand the reasoning behind your decisions, they can handle situations you never explicitly covered.
+
+Separate the principles you will never compromise on from the methods that can change. Hold the first firmly, and let people …</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-2.jpg" data-meta="Instagram · @transganizer · 26 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-2.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 26 Mar 2026</span><span class="ws-ttl">Broken systems aren't free</span><span class="ws-sub">₹2 lakh a month, lost to searching</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>&quot;We don&#x27;t have time to build systems.&quot;
+
+Here&#x27;s what that actually means:
+
+Your team spends 20% of their time searching for information, asking questions, waiting for approvals.
+
+In a 10-person company, that&#x27;s ₹2 lakh wasted every month. ₹24 lakh a year.
+
+You don&#x27;t have time NOT to build systems.
+
+Every day without clear processes is bleeding money, energy, and momentum.
+
+Start small. One SOP this week. That&#x27;s it.</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-3.jpg" data-meta="Instagram · @transganizer · 17 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-3.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 17 Mar 2026</span><span class="ws-ttl">Context before frameworks</span><span class="ws-sub">Reel · concept, content, context</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Everyone online is talking about scaling faster, hiring leaders, building culture.
+
+None of it is wrong. But most of it misses one thing 👇
+
+✨ Context.
+What works for a VC-funded startup in Bangalore may fail in a family-run unit in Rajkot.
+
+A hiring framework for a 500-person tech firm can break inside a 30-person trading business.
+
+Yet founders treat advice like universal truth.
+
+When it doesn&#x27;t work, they blame themselves.
+
+Before applying any strategy, understand 3 layers:
+• Concept → Why it works
+• Content → How it&#x27;s structured
+• Context → Where you are right now
+
+Most founders copy content without checking context.
+
+That&#x27;s where things start falling apart.
+Know your reality first.
+
+The right frameworks will follow.</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-4.jpg" data-meta="Instagram · @transganizer · 19 Nov 2025">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-4.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 19 Nov 2025</span><span class="ws-ttl">Don't just grow, transform</span><span class="ws-sub">Event reel</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>It&#x27;s not just about reaching the next milestone, it&#x27;s about fundamentally evolving how you operate. True, sustainable growth stems from a holistic approach to change, touching every part of your enterprise.
+
+What&#x27;s one area in your business you&#x27;re looking to transform this year? Share below! 👇
+
+#businessgrowth #transformations #holisticchange #entrepreneurmindset #leadershipjourney #transganization</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-5.jpg" data-meta="Instagram · @transganizer · 11 Mar 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-5.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 11 Mar 2026</span><span class="ws-ttl">₹50 crore revenue, ₹15 lakh home</span><span class="ws-sub">Revenue vs real profit</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>Revenue looks great on paper.
+
+₹50 crore! Impressive, right?
+
+But after salaries, rent, inventory, interest, expenses... you took home ₹15 lakh.
+
+That&#x27;s ₹1.25 lakh a month. Your senior employee makes more than you.
+
+This is the reality nobody talks about. High revenue. Low profit. Owner bleeding.
+
+If this is you: Stop chasing the top-line. Fix your margins. Build real profitability.
+
+You didn&#x27;t start a business to look rich while being broke.
+
+#profit #business #leader #rich</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-6.jpg" data-meta="Instagram · @transganizer · 4 Feb 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-6.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 4 Feb 2026</span><span class="ws-ttl">6.4 crore SMEs in India</span><span class="ws-sub">Collab post · data-led creative</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>India has 6.4 Crore SMEs. 🇮🇳 We contribute 33% to the GDP 📈 and employ over 11 Crore people. 👷
+
+Impressive, right? ✨
+
+But here&#x27;s what the reports don&#x27;t shout about:
+
+💸 Over half of us struggle to get proper financing.
+
+💻 A quarter can&#x27;t adopt the technology we need.
+
+📉 Most businesses fail within the first 5 years.
+
+If you&#x27;re struggling right now—with cash flow, with hiring, or with scaling—you are not failing. ✋ You&#x27;re simply facing the same systemic challenges as millions of others. 🌊
+
+The difference? ⚖️ Some founders find companionship to navigate the storm. Others try to go it alone and burn out. 🔥
+
+Which one are you? 🤔
+
+#founders #businessconsulting #entrepreneurlifestyle #newtechnology #growthjourney #trendings #adoption #posts</span></span></button>
+        <button class="ws-item" type="button" data-type="post" data-src="ig-7.jpg" data-meta="Instagram · @transganizer · 7 Feb 2026">
+          <span class="ws-cover"><span class="ws-thumb full sq"><img src="t-ig-7.jpg" alt="" loading="lazy" decoding="async"></span><span class="ws-meta"><span class="ws-kind">Instagram · 7 Feb 2026</span><span class="ws-ttl">Process beats chaos</span><span class="ws-sub">The Infosys story</span></span><span class="ws-ic go" aria-hidden="true">Read <b>→</b></span><span class="ws-cap" hidden>In the 1990s, @infosys did something crazy.
+
+While their competitors stayed &quot;comfort zone&quot; and &quot;Intuition driven,&quot; Infosys documented every single process. Every workflow. Every decision framework.
+
+People laughed. &quot;Too rigid. Too corporate. They&#x27;ll never move fast.&quot;
+
+Fast forward to today: ₹1.7 lakh crore revenue. 3.45 lakh employees. Still maintaining quality.
+
+Why? Because you can&#x27;t scale chaos. You can only scale systems.
+
+Your business might be small today. But if you want it to be big tomorrow, start documenting now.
+
+One process this week. That&#x27;s all it takes to begin.
+
+#infosys #businesses #instagramgrowth #instagrampost #trendings</span></span></button>
     </div>
   </div>
 </section>
@@ -1221,6 +1649,11 @@
         list = []; stage.classList.remove("tall");
         stage.innerHTML = '<video poster="' + (poster || "") + '" controls autoplay playsinline><source src="' + src + '" type=\'video/mp4; codecs="avc1.640028"\'><source src="' + src.replace(/\.mp4$/, ".webm") + '" type="video/webm"></video>';
         prev.hidden = next.hidden = true; count.textContent = "";
+      } else if (type === "post") {
+        list = []; stage.classList.remove("tall"); prev.hidden = next.hidden = true; count.textContent = "";
+        var cap = from.querySelector(".ws-cap"), m = from.getAttribute("data-meta") || "";
+        stage.innerHTML = '<div class="post-view"><img src="' + src + '" alt=""><div class="post-cap" data-lenis-prevent><p class="pc-meta"></p><div class="pc-text"></div></div></div>';
+        stage.querySelector(".pc-meta").textContent = m; stage.querySelector(".pc-text").textContent = cap ? cap.textContent : "";
       } else { list = (pages || src).split(","); idx = 0; showPage(); }
       viewer.hidden = false; document.body.style.overflow = "hidden"; if (window.__lenis) window.__lenis.stop(); document.getElementById("wsClose").focus();
     }
