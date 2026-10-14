@@ -295,7 +295,7 @@
   .foot-grid .intro { font-size:15px; color:rgba(255,255,255,.75); max-width:34ch; }
   .wordmark { font-weight:500; letter-spacing:-.075em; line-height:.78; font-size:clamp(64px,15.4vw,232px); white-space:nowrap; padding:44px 0 6px; text-align:center; user-select:none; overflow:hidden;
     color:#fff; }
-  .wordmark .wl { display:inline-block; background:linear-gradient(180deg,#ffffff 10%,#8a8a8a 60%,#262626 100%); -webkit-background-clip:text; background-clip:text; color:transparent; padding-bottom:.06em; }
+  .wordmark .wl { display:inline-block; background:linear-gradient(180deg,#ffffff 10%,#8a8a8a 60%,#262626 100%); -webkit-background-clip:text; background-clip:text; color:transparent; padding:0 .06em .06em; }
   .foot-bar { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:18px 0 24px; font-size:13px; color:rgba(255,255,255,.75); }
   .totop { width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.35); display:inline-flex; align-items:center; justify-content:center; text-decoration:none; transition:background .3s; }
   .totop:hover { background:rgba(255,255,255,.12); }
@@ -432,6 +432,7 @@
     .ws-viewer { padding:60px 10px; } .ws-nav { top:auto; bottom:12px; transform:none; }
     .rows li { flex-direction:column; gap:2px; }
     .foot-grid { grid-template-columns:1fr; }
+    .wordmark { font-size:13.6vw; }
   }
 </style>
 </head>
@@ -945,8 +946,8 @@
     // Footer wordmark: letters rise in one by one
     var wm = document.querySelector(".wordmark");
     if (wm) {
-      wm.innerHTML = wm.textContent.split("").map(function (c) { return c === " " ? " " : '<span class="wl">' + c + '</span>'; }).join("");
-      gsap.fromTo(wm.querySelectorAll(".wl"), { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .04, duration: 1.2, ease: "expo.out",
+      wm.innerHTML = '<span class="wl">' + wm.textContent + '</span>';
+      gsap.fromTo(wm.querySelector(".wl"), { yPercent: 70, opacity: 0, filter: "blur(12px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 1.6, ease: "expo.out",
         scrollTrigger: { trigger: wm, start: "top 95%", toggleActions: "play none none reverse" } });
     }
     // Reel: grows from a card to full width, the two words slide apart
