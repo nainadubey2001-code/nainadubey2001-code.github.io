@@ -160,6 +160,9 @@
   .cs-dots { position:absolute; left:0; right:0; bottom:12px; display:flex; justify-content:center; gap:6px; }
   .cs-dots b { width:7px; height:7px; border-radius:99px; background:rgba(0,0,0,.25); cursor:pointer; transition:width .4s var(--ease), background .4s; }
   .cs-dots b.on { width:22px; background:#111; }
+  .case-media .screen .cs-car.contain .cs-track img { object-fit:contain; background:#0d0d0d; }
+  .cs-car.contain .cs-dots b { background:rgba(255,255,255,.3); } .cs-car.contain .cs-dots b.on { background:#fff; }
+  .cs-car.contain .cs-dots { gap:5px; } .cs-car.contain .cs-dots b { width:6px; height:6px; } .cs-car.contain .cs-dots b.on { width:18px; }
   .cs-tag { position:absolute; left:12px; top:12px; font-size:11.5px; padding:6px 10px; border-radius:999px; color:#111; background:rgba(255,255,255,.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
   @media (hover:none) { .cs-nav { opacity:1; } }
   .ai-card { text-align:center; } .ai-card p { margin-top:26px; color:rgba(255,255,255,.66); font-size:13px; max-width:30ch; margin-inline:auto; }
@@ -1507,7 +1510,9 @@ One process this week. That&#x27;s all it takes to begin.
                ["What I did", "Owned the marketing end to end: pre-event promotion across WhatsApp and social media, live session support on the day, and publishing each recording to YouTube so every session kept working after it ended."],
                ["Tools", "WhatsApp campaigns, LinkedIn, YouTube, Canva"],
                ["Result", "80–90 attendees per session and a 17% conversion rate on WhatsApp campaigns."]] },
-      { big: "+57%", bigL: "Company page growth", media: '<img src="webinar-banner-1.jpg" alt="LinkedIn Live banner" data-zoom="webinar-banner-1.jpg">',
+      { big: "+57%", bigL: "Company page growth", media: '<div class="cs-car contain" data-car data-interval="2200"><div class="cs-track"><img src="webinar-banner-1.jpg" alt="LinkedIn Live banner" data-zoom="webinar-banner-1.jpg" loading="lazy"><img src="li-post-1.jpg" alt="LinkedIn post 1" data-zoom="li-post-1.jpg" loading="lazy"><img src="li-post-2.jpg" alt="LinkedIn post 2" data-zoom="li-post-2.jpg" loading="lazy"><img src="li-post-3.jpg" alt="LinkedIn post 3" data-zoom="li-post-3.jpg" loading="lazy"><img src="li-post-4.jpg" alt="LinkedIn post 4" data-zoom="li-post-4.jpg" loading="lazy"><img src="li-post-5.jpg" alt="LinkedIn post 5" data-zoom="li-post-5.jpg" loading="lazy"><img src="darpan-live-1.jpg" alt="Darpan LinkedIn Live creative 1" data-zoom="darpan-live-1.jpg" loading="lazy"><img src="darpan-live-2.jpg" alt="Darpan LinkedIn Live creative 2" data-zoom="darpan-live-2.jpg" loading="lazy"><img src="darpan-live-3.jpg" alt="Darpan LinkedIn Live creative 3" data-zoom="darpan-live-3.jpg" loading="lazy"><img src="darpan-live-4.jpg" alt="Darpan LinkedIn Live creative 4" data-zoom="darpan-live-4.jpg" loading="lazy"></div>' +
+          '<button class="cs-nav prev" type="button" aria-label="Previous slide">‹</button><button class="cs-nav next" type="button" aria-label="Next slide">›</button>' +
+          '<div class="cs-dots"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div><span class="cs-tag">LinkedIn · 10 slides</span></div>',
         rows: [["Challenge", "Build a visible, credible LinkedIn presence for the company and its founder in a crowded B2B space."],
                ["What I did", "Ran a 360-degree content calendar across LinkedIn, Instagram, Facebook and YouTube, briefed designers and an external LinkedIn agency, and coordinated thought-leadership content for the founder's profile."],
                ["Tools", "LinkedIn, Canva, CapCut, HeyGen, AI writing tools"],
@@ -1531,7 +1536,7 @@ One process this week. That&#x27;s all it takes to begin.
       var track = car.querySelector(".cs-track"), slides = track.children, dots = car.querySelectorAll(".cs-dots b"), i = 0, x0 = null;
       function go(n) { i = (n + slides.length) % slides.length; track.style.transform = "translateX(" + (-100 * i) + "%)";
         dots.forEach(function (d, k) { d.className = k === i ? "on" : ""; }); }
-      function auto() { clearInterval(carTimer); if (!reduce) carTimer = setInterval(function () { if (visible) go(i + 1); }, 3800); }
+      function auto() { clearInterval(carTimer); if (!reduce) carTimer = setInterval(function () { if (visible) go(i + 1); }, +(car.getAttribute("data-interval") || 3800)); }
       car.querySelector(".prev").onclick = function () { go(i - 1); auto(); };
       car.querySelector(".next").onclick = function () { go(i + 1); auto(); };
       dots.forEach(function (d, k) { d.onclick = function () { go(k); auto(); }; });
